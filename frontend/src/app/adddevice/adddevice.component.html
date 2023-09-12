@@ -1,0 +1,75 @@
+<div class="container mt-5" >
+    <h1 style="text-align: center;" class="mt-5 ">UPLOAD EXCEL FILE</h1>
+    <div *ngIf="errMsg" class="alert alert-danger alert-warning alert-dismissible fade show" role="alert">
+      <strong>{{errMsg}}</strong>
+      <button type="button" class="btn-close " data-bs-dismiss="alert" aria-label="Close" (click)="clickClose()"></button>
+    </div>
+    <div *ngIf="successMsg" class="alert alert-success alert-dismissible fade show" role="alert">
+      <strong>{{successMsg}}</strong>
+      <button type="button" class="btn-close " data-bs-dismiss="alert" aria-label="Close" (click)="clickClose()"></button>
+    </div>
+    <input type="file" class="mt-5 " accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" (change)="changeFile($event)">
+    <button class="btn btn-primary " (click)="uploadFile()">Upload File</button>
+    <div *ngIf='spiner===true' class="ms-4 mt-2 spinner-border" role="status">
+      <!-- <span *ngIf='spiner===true'class="ms-4 mt-2visually-hidden">Loading...</span> -->
+    </div>
+    <h1 style="text-align: center;" class="mt-5 "> ADD DEVICE</h1>
+    <div *ngIf="erMsg" class="alert alert-danger alert-warning alert-dismissible fade show" role="alert">
+      <strong>{{erMsg}}</strong>
+      <button type="button" class="btn-close " data-bs-dismiss="alert" aria-label="Close" (click)="clickClose()"></button>
+    </div>
+    <div *ngIf="sucMsg" class="alert alert-success alert-dismissible fade show" role="alert">
+      <strong>{{sucMsg}}</strong>
+      <button type="button" class="btn-close " data-bs-dismiss="alert" aria-label="Close" (click)="clickClose()"></button>
+    </div>
+    <form [formGroup]="deviceForm"  class="container form-center" >
+      <div class="col-md-4 mb-1">
+          <input type="text" class="form-control" placeholder="Enter rack number" formControlName="rack">
+      </div>
+      <div class="col-md-4 mb-1">
+          <input type="text" class="form-control" placeholder="Enter unit" formControlName="unit">
+      </div>
+      <div class="col-md-4  mb-1">
+          <input type="text" class="form-control" placeholder="Enter device name" formControlName="devicename">
+      </div>
+      <div class="col-md-4 mb-1">
+          <input type="text" class="form-control" placeholder="Enter console IP" formControlName="consoleip">
+      </div>
+      <div class="col-md-4  mb-1">
+        <input type="text" class="form-control" placeholder="Enter serial number" formControlName="serialnumber">
+    </div>  <div class="col-md-4  mb-1">
+      <input type="text" class="form-control" placeholder="Enter mac address" formControlName="mac">
+  </div>
+      <div class="col-md-4  mb-1">
+          <input type="text" class="form-control" placeholder="Enter console port" formControlName="consoleport">
+      </div>
+      <div class="col-md-4 mb-1">
+          <input type="text" class="form-control" placeholder="Enter management IP" formControlName="managementip">
+      </div>
+      <div class="col-md-4  mb-1">
+          <input type="text" class="form-control" placeholder="Enter power cycle IP" formControlName="powercycleip">
+      </div>
+      <div class="col-md-4  mb-1">
+          <input type="text" class="form-control" placeholder="Enter power cycle port" formControlName="powercycleport">
+      </div>
+      <div class="col-md-4 mb-1">
+          <input type="text" class="form-control" placeholder="Enter team name" formControlName="teamname">
+      </div>
+      <div class="col-md-4  mb-1">
+          <input type="text" class="form-control" placeholder="Enter project name" formControlName="projectname">
+      </div>
+      <div class="col-md-4  mb-1">
+        <input type="text" class="form-control" placeholder="Enter TG Information" formControlName="tg">
+    </div>
+    
+      
+     
+
+      <div class="col-md-4  mb-1">
+
+      <button type="submit" class="btn btn-primary mb-1" (click)="deviceSubmit()">Add device</button>
+  </div>
+ 
+  </form>
+</div> 
+

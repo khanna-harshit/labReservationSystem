@@ -1,0 +1,70 @@
+<div class=" container mt-5">
+    <div class="container hello " style="background-color: white;">
+      <h1 style="text-align: center;" class="mt-5 ">UPLOAD EXCEL FILE</h1>
+      <div *ngIf="errMsg" class="alert alert-danger alert-warning alert-dismissible fade show" role="alert">
+        <strong>{{errMsg}}</strong>
+        <button type="button" class="btn-close " data-bs-dismiss="alert" aria-label="Close" (click)="clickClose()"></button>
+      </div>
+      <div *ngIf="successMsg" class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>{{successMsg}}</strong>
+        <button type="button" class="btn-close " data-bs-dismiss="alert" aria-label="Close" (click)="clickClose()"></button>
+      </div>
+      <input type="file" class="mt-5 " accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" (change)="changeFile($event)">
+      <button class="btn btn-primary " (click)="uploadFile()">Upload File</button>
+      <div *ngIf='spiner===true' class="ms-4 mt-2 spinner-border" role="status">
+        <!-- <span *ngIf='spiner===true'class="ms-4 mt-2visually-hidden">Loading...</span> -->
+      </div>
+      
+       <h1 style="text-align: center;" class="m-5">ADD USER</h1>
+       <div *ngIf="erMsg" class="alert alert-danger alert-warning alert-dismissible fade show" role="alert">
+        <strong>{{erMsg}}</strong>
+        <button type="button" class="btn-close " data-bs-dismiss="alert" aria-label="Close" (click)="clickClose()"></button>
+      </div>
+      <div *ngIf="sucMsg" class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>{{sucMsg}}</strong>
+        <button type="button" class="btn-close " data-bs-dismiss="alert" aria-label="Close" (click)="clickClose()"></button>
+      </div>
+    
+        <div class="row">
+             <!-- show error message -->
+       
+        <form [formGroup]="userForm"  >
+            <div class="col-md-4 m-2">
+                <input type="'text" class="form-control" placeholder="Enter email id" formControlName="fullname">
+            </div>
+            <div class="col-md-4 m-2">
+                <input type="'text" class="form-control" placeholder="Enter Password" formControlName="password">
+            </div>
+            <div class="col-md-4 m-2">
+              <input type="'text" class="form-control" placeholder="Enter teamname" formControlName="teamname">
+          </div>
+              <div class="col-md-4 m-2">
+    
+                <label for="accesslevel">Access Level</label>
+                <select  id="accesslevel" formControlName="accesslevel">
+                  <option value="user">user</option>
+                  <option value="guest">guest</option>
+    
+                  <option value="admin">admin</option>
+                  
+                </select>
+                  </div>
+    
+            <div class="col-md-4 m-2" >
+    
+            <button type="submit" class="btn btn-primary m-2" (click)="userSubmit()">Add User</button>
+        </div>
+       
+        </form>
+        </div>
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    

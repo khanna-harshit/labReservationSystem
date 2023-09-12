@@ -1,0 +1,111 @@
+
+<div class="mt-5 ">
+       
+
+    <h1  style="text-align: center;" class="mt-5 mb-5 bello"> Update {{topologyName}}</h1>
+    <div *ngIf="errMsg" class="alert alert-danger alert-warning alert-dismissible fade show container" role="alert">
+        <strong>{{errMsg}}</strong>
+        <button type="button" class="btn-close " data-bs-dismiss="alert" aria-label="Close" (click)="clickClose()"></button>
+      </div>
+      <div *ngIf="successMsg" class="alert alert-success alert-success alert-dismissible fade show container" role="alert">
+        <strong>{{successMsg}}</strong>
+        <button type="button" class="btn-close " data-bs-dismiss="alert" aria-label="Close" (click)="clickClose()"></button>
+      </div>
+    
+<!-- <table  class="table table-bordered ms-5 container">  -->
+<table class="table table-bordered container" >
+<thead style="text-align:center;">
+  <tr>
+   
+    <th scope="col" >Rack</th>
+    <th scope="col">Unit</th>
+    <th scope="col">Device Name</th>
+    <th scope="col">Console IP</th>
+    <th scope="col">Console port</th>
+    <th scope="col">Management IP</th>
+    <th scope="col">Power Cycler IP</th>
+    <th scope="col">Power Cycler Port</th>
+    <!-- <th scope="col" *ngIf="( access==='admin' || access==='user')">Status</th> -->
+    <th scope="col" *ngIf="( access==='admin' || access==='user')">Add To topology</th>
+
+
+  </tr>
+</thead>
+<tbody> 
+  <tr *ngFor="let item of devices">
+    <td *ngIf="projectname===item.projectname && !arrayOfDevicesInTopology.includes(item.id)">{{item.rack}}</td>
+    <td *ngIf="projectname===item.projectname && !arrayOfDevicesInTopology.includes(item.id)">{{item.unit}}</td>
+    <td *ngIf="projectname===item.projectname && !arrayOfDevicesInTopology.includes(item.id)">{{item.devicename}}</td>
+    <td *ngIf="projectname===item.projectname && !arrayOfDevicesInTopology.includes(item.id)">{{item.consoleip}}</td>
+    <td *ngIf="projectname===item.projectname && !arrayOfDevicesInTopology.includes(item.id)">{{item.consoleport}}</td>
+    <td *ngIf="projectname===item.projectname && !arrayOfDevicesInTopology.includes(item.id)">{{item.managementip}}</td>
+    <td *ngIf="projectname===item.projectname && !arrayOfDevicesInTopology.includes(item.id)">{{item.powercycleip}}</td>
+    <td *ngIf="projectname===item.projectname && !arrayOfDevicesInTopology.includes(item.id)">{{item.powercycleport}}</td>
+   
+
+    <!-- <td *ngIf=" ( access==='admin' || access==='user')"><button class=" btn btn-warning" (click)="clickedunreserved(item.id)">More</button></td> -->
+    <!-- <td *ngIf="item.status==='Reserved'  && ( access==='admin' || access==='user')"><button class="btn btn-success" (click)="clickedreserved(item.id)">{{item.status}}</button></td> -->
+    
+    <td *ngIf="( access==='admin' || access==='user') && projectname===item.projectname && !arrayOfDevicesInTopology.includes(item.id) "><button class="btn btn-success" *ngIf="!arrayOfDevicesToAddInTopology.includes(item.id)" (click)="addToTopology(item.id)">Add to topology</button>
+        <button class="btn btn-danger" *ngIf="arrayOfDevicesToAddInTopology.includes(item.id)" (click)="deleteFromTopology(item.id)">Delete</button></td>
+
+
+
+
+
+
+    <!-- <td><button class="btn btn-danger" (click)="deleteId(item.id)">Delete</button></td>
+    <td><a [routerLink]="['/create', item.id]" class="btn btn-primary" >Update</a></td> -->
+
+    
+  </tr>
+  
+ </tbody> 
+</table>
+</div> 
+
+
+
+
+<div class="container">
+<button type="submit" class="btn btn-primary m-2 mb-5 "(click)="clickedModify(arrayOfDevicesToAddInTopology,teamname)">Modify</button>
+</div>
+
+<div style="text-align: center; ">
+  <h2 class="m-3">Update Project For Topology</h2>
+</div>
+<div *ngIf="errMsgForProject" class="alert alert-danger alert-warning alert-dismissible fade show container" role="alert">
+  <strong>{{errMsgForProject}}</strong>
+  <button type="button" class="btn-close " data-bs-dismiss="alert" aria-label="Close" (click)="clickCloseForProject()"></button>
+</div>
+<div *ngIf="successMsgForProject" class="alert alert-success alert-success alert-dismissible fade show container" role="alert">
+  <strong>{{successMsgForProject}}</strong>
+  <button type="button" class="btn-close " data-bs-dismiss="alert" aria-label="Close" (click)="clickCloseForProject()"></button>
+</div>
+<form [formGroup]="updateUsedForForm" class="container" >
+  <div class="col-md-4 ">
+      <input type="text" class="form-control" placeholder="E.g CLS SONIC" formControlName="usedFor">
+    
+  </div>
+ 
+  
+
+  <div class="col-md-4 ">
+
+  <button type="submit" class="btn btn-primary m-2 mb-5" (click)="clickedForm(topologyName)">Update Topology</button>
+</div>
+
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+

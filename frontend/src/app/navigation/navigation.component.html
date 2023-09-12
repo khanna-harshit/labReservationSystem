@@ -1,0 +1,86 @@
+<nav class="navbar navbar-color navbar-expand-lg bg-body-tertiary  bg-dark" data-bs-theme="dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" [routerLink]="['/read']">Lab Reservation Tool</a>
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 mr-2">
+      <li class="nav-item">
+        <a  class="nav-link active"   aria-current="page" [routerLink]="['/read']" >Home</a>
+      </li>
+      </ul>
+      <button class="navbar-toggler" type="button"  data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+  
+
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        
+        <li class="nav-item">
+          <a *ngIf="access==='admin'" class="nav-link active"   aria-current="page" [routerLink]="['/adduserintool']" >Add User</a>
+        </li>
+        <li class="nav-item">
+          <a *ngIf="access==='admin'" class="nav-link active"  aria-current="page" [routerLink]="['/adddeviceintool']">Add Device</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" *ngIf="access==='admin' || access==='user'"  aria-current="page" [routerLink]="['/userinfo']">User Info</a>
+        </li>
+        
+        <button class="btn btn-outline-success me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">Projects</button>
+        <button *ngIf="access==='admin'" class="btn btn-outline-success me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOption" aria-controls="offcanvasWithBothOptions">Team Members</button>
+  
+      </ul>
+      <!-- <button class="btn btn-outline-success me-2" type="submit" (click)="clickedCart()">Your topologies</button> -->
+      <button class="btn btn-outline-success me-2" *ngIf="access==='admin' " type="submit" [routerLink]="['/createtopology']"> Create Topology</button>
+
+
+      <button class="btn btn-outline-danger me-2" type="submit" (click)="logout()">Logout</button>
+
+    </div>
+   
+  </div>
+</nav>
+<div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
+    <div class="offcanvas-header">
+      <h2 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Projects</h2>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+
+    </div>
+    <div class="offcanvas-body">
+              <nav class="nav nav-pills " *ngFor="let project of projects">
+                <a *ngIf="project.teamname===teamname" class="nav-link ms-3 my-1"  style="color:black;" [routerLink]="['/project',project.projectname]">{{project.projectname}}</a>
+              </nav>
+            
+            <button class="btn btn-primary m-3" *ngIf="access==='admin'"   [routerLink]="['/registerproject']">Register Project</button>   </div>
+  </div> 
+  <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOption" aria-labelledby="offcanvasWithBothOptionsLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Team Members</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <nav id="navbar-example3" class="  ">
+          <nav class="nav nav-pills " >
+            <table  class="table table-bordered container">
+              <thead style="text-align:center;">
+                <tr>
+                 
+                  <th scope="col" >Name</th>
+                  <th scope="col">Access</th>
+                  <th scope="col">Action</th>
+                  </tr>
+                </thead>
+              <tbody> 
+                <tr *ngFor="let members of teamMembers" >
+                  <td *ngIf="members.teamname===teamname">{{members.name}}</td>
+                  <td *ngIf="members.teamname===teamname">{{members.accesslevel}}</td>
+                  <td *ngIf="members.accesslevel==='user' && members.teamname===teamname"><button class=" btn btn-warning" [routerLink]="['/teammember',members.id]">More Information</button></td>
+                
+                  </tr>
+                  </tbody>
+
+            </table>
+           
+          </nav>
+        
+        </nav>

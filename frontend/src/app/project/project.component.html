@@ -1,0 +1,107 @@
+<div class="container m-5">
+
+    <h1 style="text-align: center; " class="m-5"> {{getparamname}} Devices</h1>
+    
+<table class="table table-bordered" *ngIf="access==='user' || access==='admin'">
+<thead>
+  <tr>
+   
+    <th style="text-align: center;" scope="col">Rack</th>
+    <th style="text-align: center;" scope="col">Unit</th>
+    <th style="text-align: center;" scope="col">Device Name</th>
+    <th style="text-align: center;" scope="col">Console IP</th>
+    <th style="text-align: center;" scope="col">Console Port</th>
+    <th style="text-align: center;" scope="col">Management IP</th>
+    <th style="text-align: center;" scope="col">Power Cycler IP</th>
+    <th style="text-align: center;" scope="col">Power Cycler Port</th>
+    <th style="text-align: center;" scope="col">Team Name</th>
+    <th style="text-align: center;" scope="col">Project Name</th>
+    <th style="text-align: center;" scope="col" *ngIf="access==='admin' || access==='user'">Action</th>
+  </tr>
+</thead>
+<tbody> 
+  <tr *ngFor="let item of devices">
+    <td *ngIf="item.projectname === getparamname" style="text-align:center;">{{item.rack}}</td>
+    <td *ngIf="item.projectname === getparamname"style="text-align:center;">{{item.unit}}</td>
+    <td *ngIf="item.projectname === getparamname"style="text-align:center;">{{item.devicename}}</td>
+    <td *ngIf="item.projectname === getparamname"style="text-align:center;">{{item.consoleip}}</td>
+    <td *ngIf="item.projectname === getparamname"style="text-align:center;">{{item.consoleport}}</td>
+    <td *ngIf="item.projectname === getparamname"style="text-align:center;">{{item.managementip}}</td>
+    <td *ngIf="item.projectname === getparamname"style="text-align:center;">{{item.powercycleip}}</td>
+    <td *ngIf="item.projectname === getparamname"style="text-align:center;">{{item.powercycleport}}</td>
+    <td *ngIf="item.projectname === getparamname"style="text-align:center;">{{item.teamname}}</td>
+    <td *ngIf="item.projectname === getparamname"style="text-align:center;">{{item.projectname}}</td>
+   
+
+    <td style="text-align: center;"  *ngIf=" item.projectname === getparamname && (access==='admin' || access==='user') && !devicesInTopology.includes(item.id)"><button class="btn btn-warning"  [routerLink]="['/devicedetail',item.id,getProject(item.projectname)]">More</button></td>
+    <td  style="text-align: center;"*ngIf=" item.projectname === getparamname && (access==='admin' || access==='user') && devicesInTopology.includes(item.id)">--</td>
+
+    <!-- <td *ngIf="item.status==='Reserved' && item.projectname === getparamname && (access==='admin' || access==='user') "><button class="btn btn-success"  (click)="clickedreserved(item.id)">{{item.status}}</button></td> -->
+
+
+
+
+    <!-- <td><button class="btn btn-danger" (click)="deleteId(item.id)">Delete</button></td>
+    <td><a [routerLink]="['/create', item.id]" class="btn btn-primary" >Update</a></td> -->
+
+    
+  </tr>
+  
+ </tbody> 
+</table>
+<table class="table table-bordered" *ngIf="access==='guest' ">
+<thead>
+  <tr>
+   
+    <th style="text-align: center;" scope="col">Rack</th>
+    <th style="text-align: center;" scope="col">Unit</th>
+    <th style="text-align: center;" scope="col">Device Name</th>
+    <th style="text-align: center;" scope="col">Console IP</th>
+    <th style="text-align: center;" scope="col">Management IP</th>
+    <th style="text-align: center;" scope="col">Power Cycler IP</th>
+    <th style="text-align: center;" scope="col">Power Cycler Port</th>
+    <th style="text-align: center;" scope="col">Team Name</th>
+    <th style="text-align: center;" scope="col">Project Name</th>
+    <th style="text-align: center;" scope="col" *ngIf="access==='admin' || access==='user'">Action</th>
+  </tr>
+</thead>
+<tbody> 
+  <tr *ngFor="let item of devices">
+    <td *ngIf="item.projectname === getparamname">{{item.rack}}</td>
+    <td *ngIf="item.projectname === getparamname">{{item.unit}}</td>
+    <td *ngIf="item.projectname === getparamname">{{item.devicename}}</td>
+    <td *ngIf="item.projectname === getparamname">{{item.consoleip}}</td>
+    <td *ngIf="item.projectname === getparamname">{{item.managementip}}</td>
+    <td *ngIf="item.projectname === getparamname">{{item.powercycleip}}</td>
+    <td *ngIf="item.projectname === getparamname">{{item.powercycleport}}</td>
+    <td *ngIf="item.projectname === getparamname">{{item.teamname}}</td>
+    <td *ngIf="item.projectname === getparamname">{{item.projectname}}</td>
+
+
+
+    <td style="text-align: center;"  *ngIf=" item.projectname === getparamname && (access==='admin' || access==='user') && !devicesInTopology.includes(item.id)"><button class="btn btn-warning"  [routerLink]="['/devicedetail',item.id,getProject(item.projectname)]">More</button></td>
+    <td  style="text-align: center;"*ngIf=" item.projectname === getparamname && (access==='admin' || access==='user') && devicesInTopology.includes(item.id)">--</td>
+
+    <!-- <td *ngIf="item.status==='Reserved' && item.projectname === getparamname && (access==='admin' || access==='user') "><button class="btn btn-success"  (click)="clickedreserved(item.id)">{{item.status}}</button></td> -->
+
+
+
+
+    <!-- <td><button class="btn btn-danger" (click)="deleteId(item.id)">Delete</button></td>
+    <td><a [routerLink]="['/create', item.id]" class="btn btn-primary" >Update</a></td> -->
+
+    
+  </tr>
+  
+ </tbody> 
+</table>
+</div> 
+
+<div class="container m-5">
+<button class=" btn btn-danger" *ngIf="access==='admin'" (click)="deleteProject(getparamname)" >Delete project</button>
+</div>
+
+
+
+
+

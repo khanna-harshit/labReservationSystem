@@ -1,0 +1,179 @@
+<div *ngIf="successMsg" class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>{{successMsg}}</strong>
+    <button type="button" class="btn-close " data-bs-dismiss="alert" aria-label="Close" (click)="clickClose()"></button>
+  </div>
+  <div class="container m-5">
+     <h1 ><b>Topology {{topologyname}}</b></h1><span *ngIf="currentStatusArr.includes(UserData(topologyname))" style="float:right;" ><button class=" btn btn-danger m-2" >Reserved</button>
+     </span><span  style="float:right;" *ngIf="!currentStatusArr.includes(UserData(topologyname))"><button class=" btn btn-success m-2" >Available</button>
+     </span>
+     </div>
+    
+            <div class="container">
+          <table class="table table-bordered container" >
+            <thead style="text-align:center;">
+              <tr>
+               
+                <th scope="col" >Rack</th>
+                <th scope="col">Unit</th>
+                <th scope="col">Device Name</th>
+                <th scope="col">Console IP</th>
+                <th scope="col">Console port</th>
+                <th scope="col">Management IP</th>
+                <th scope="col">Power Cycler IP</th>
+                <th scope="col">Power Cycler Port</th>
+                <th scope="col">TG</th>
+
+              </tr>
+            </thead>
+            <tbody *ngFor="let item of topologyInformation"> 
+              <tr *ngIf="item.topologyname===topologyname">
+                <td  >{{item.rack}}</td>
+                <td >{{item.unit}}</td>
+                <td >{{item.devicename}}</td>
+                <td >{{item.consoleip}}</td>
+                <td >{{item.consoleport}}</td>
+                <td >{{item.managementip}}</td>
+                <td >{{item.powercycleip}}</td>
+                <td >{{item.powercycleport}}</td>
+               <td >  {{item.TG}}</td>
+
+               
+          
+                <!-- <td *ngIf="( access==='admin' || access==='user') && !currentStatusArr.includes(item.deviceid)"><button class=" btn btn-primary" >Unreserved</button></td> -->
+
+          
+          
+          
+          
+                <!-- <td *ngIf="item.status==='Unreserved'"><button class="btn btn-danger" (click)="deleteId(item.id, item.userid)">Delete</button></td>  -->
+              </tr>
+              
+             </tbody> 
+          </table>
+          <div *ngIf="errMsg" class="alert alert-danger alert-warning alert-dismissible fade show" role="alert">
+            <strong>{{errMsg}}</strong>
+            <button type="button" class="btn-close " data-bs-dismiss="alert" aria-label="Close" (click)="clickClose()"></button>
+          </div>
+          <div class=" container mt-3 mb-3" style="font-size: 15px;" *ngIf="extended!=='Extended'">For {{showCurrentTime}}</div>
+          <form [formGroup]="dateForm" *ngIf="extended==='Extended' && showSelectTime" >
+            <div class="col-md-4 m-2">
+              <label>Start Date : &nbsp; &nbsp; &nbsp; </label>
+                <input type="datetime-local" min={{startTime}} max={{endTime}} formControlName="startDate">
+            </div>
+            <div class="col-md-4 m-2">
+              <label>End Date &nbsp;&nbsp;: &nbsp;&nbsp; &nbsp;</label>
+                <input type="datetime-local"  min={{startTime}} max={{endTime}} formControlName="endDate">
+            </div>
+            
+    
+            <button *ngIf='hideSelectTime' type="submit" class="btn btn-warning m-2"  (click)="clickedSelectTime()">Reserve</button>
+      
+       
+        </form>
+        <div class="m-3" *ngIf="!showSelectTime">Selected Date : {{dateForm.value.startDate}} To {{dateForm.value.endDate}} <span >         <button  type="button" class="btn btn-warning m-2" (click)="clickChangeButton()">Change Date </button></span>
+        </div>
+        <div class="'container">
+          <div class="btn-group" role="group" aria-label="Basic example "  *ngIf="extended!=='Extended'">
+            
+            <div   *ngFor='let slot of timeInterval'>
+              <!-- <span *ngIf="slot.id!== ('btnradio13' && 'btnradio14' && 'btnradio15' && 'btnradio16' && 'btnradio17' &&
+               'btnradio18' &&'btnradio19' && 'btnradio20' && 'btnradio21' && 'btnradio22' &&
+               'btnradio23' &&'btnradio24')"> -->
+              <button *ngIf="(slot.id)<13 && slot.topology_slot==='yes'" type="button" class="btn btn-outline-danger m-2" >{{slot.startTime}} - {{slot.endTime}} </button>
+              <button *ngIf="(slot.id)<13 &&  slot.topology_slot==='no'" type="button" class="btn btn-outline-success m-2 button time_slot" (click)="clickedTimeSlot( slot.id, slot.startTime, slot.endTime)">{{slot.startTime}} - {{slot.endTime}} </button>
+              <button *ngIf="(slot.id)<13 && slot.topology_slot==='invalid'" type="button" class="btn btn-outline-secondary m-2" >{{slot.startTime}} - {{slot.endTime}} </button>
+              <!-- </span> -->
+            </div>
+          
+    
+           
+          </div>
+          </div>
+         <div class="'container">
+          <div class="btn-group" role="group" aria-label="Basic example "  *ngIf="extended!=='Extended'">
+            
+            <div   *ngFor='let slot of timeInterval'>
+              <!-- <span *ngIf="slot.id!== ('btnradio13' && 'btnradio14' && 'btnradio15' && 'btnradio16' && 'btnradio17' &&
+               'btnradio18' &&'btnradio19' && 'btnradio20' && 'btnradio21' && 'btnradio22' &&
+               'btnradio23' &&'btnradio24')"> -->
+              <button *ngIf="(slot.id)>=13 && slot.topology_slot==='yes'" type="button" class="btn btn-outline-danger m-2" >{{slot.startTime}} - {{slot.endTime}} </button>
+              <button *ngIf="(slot.id)>=13 &&  slot.topology_slot==='no'" type="button" class="btn btn-outline-success m-2 button" (click)="clickedTimeSlot( slot.id, slot.startTime, slot.endTime)">{{slot.startTime}} - {{slot.endTime}} </button>
+              <button *ngIf="(slot.id)>=13 && slot.topology_slot==='invalid'" type="button" class="btn btn-outline-secondary m-2" >{{slot.startTime}} - {{slot.endTime}} </button>
+              <!-- </span> -->
+            </div>
+          
+    
+           
+          </div>
+          </div>
+          
+          <!-- <div class="btn-group container" role="group" aria-label="Basic example "  *ngIf="showTime">
+            <div   *ngFor='let slot of timeInterval' >
+              <button *ngIf="slot.extended_slot==='yes'" type="button" class="btn btn-outline-danger m-2" >{{slot.startTime}} - {{slot.endTime}} </button>
+              <button *ngIf="slot.extended_slot==='no'" type="button" class="btn btn-outline-success m-2" (click)="clickedTimeSlot( slot.id, slot.startTime, slot.endTime)">{{slot.startTime}} - {{slot.endTime}} </button>
+              <button *ngIf="slot.extended_slot==='invalid'" type="button" class="btn btn-outline-secondary m-2" >{{slot.startTime}} - {{slot.endTime}} </button>
+    
+            </div>
+    
+           
+          </div> -->
+          <div *ngIf="timeSlotForTopology">
+          <button *ngIf="extended!=='Extended'" class="btn btn-warning m-2"  (click)="updateDeviceForTopology(timeSlotForTopology, topologyname)">Reserve</button>
+          <!-- <button *ngIf="extended==='Extended'" class="btn btn-warning m-2" (click)="updateDeviceForTopologyExtended(timeSlotForTopology, topologyname)">Reserve Topology</button> -->
+
+          </div>
+        </div>
+
+
+        <div class="container mt-5 mb-2" *ngIf="extended!=='Extended'" >
+            <h2 class="mb-5">Device Information</h2>
+            <h4 class="m-4"> For {{showCurrentTime}} </h4>
+            <table class="table table-bordered container m-4" >
+              <thead style="text-align:center;">
+                <tr>
+                 
+                  <th scope="col" >Start Time</th>
+                  <th scope="col">End Time</th>
+                  <th scope="col">User Name</th>
+             
+          
+          
+                </tr>
+              </thead>
+              <tbody *ngFor="let item of timeInterval"> 
+                <tr *ngIf="item.showHistory==='yes'">
+                  <td style="text-align: center;">{{item.startTime}}</td>
+                  <td style="text-align: center;">{{item.endTime}}</td>
+                  <td style="text-align: center;">{{item.user}}</td>
+                </tr>
+                
+               </tbody> 
+            </table>
+            
+          </div>
+          <div class="container mt-5 mb-2" *ngIf="extended==='Extended'" >
+            <!-- <h2 class="mb-5">Device Information</h2> -->
+            <h4 class="m-4"> For Extended </h4>
+            <table class="table table-bordered container m-4" >
+              <thead style="text-align:center;">
+                <tr>
+                 
+                  <th scope="col" >Start Time</th>
+                  <th scope="col">End Time</th>
+                  <th scope="col">User Name</th>
+             
+          
+          
+                </tr>
+              </thead>
+              <tbody *ngFor="let item of extendedTimeInterval"> 
+                <tr>
+                  <td style="text-align: center;">Date:&nbsp;{{item.time.substring(0,10)}}<br>Time:&nbsp; {{item.time.substring(11,16)}}</td>
+                  <td style="text-align: center;">Date:&nbsp;{{item.endtime.substring(0,10)}}<br>Time:&nbsp; {{item.endtime.substring(11,16)}}</td>
+                  <td style="text-align: center;">{{item.name}}</td>
+                </tr>
+                
+               </tbody> 
+            </table>
+            
+          </div>

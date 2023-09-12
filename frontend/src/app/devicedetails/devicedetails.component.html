@@ -1,0 +1,253 @@
+<div class="container ">
+
+    <div class="card m-5">
+        <div class="card-body">
+          <h2 class="card-title">{{reservedata[0].rack}} &nbsp; {{reservedata[0].unit}} &nbsp; {{reservedata[0].devicename}}</h2>
+          <h3 class="card-subtitle mb-2 text-muted">Details</h3>
+          <ul class="list-group">
+            <li class="list-group-item">Console IP &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: &nbsp;{{reservedata[0].consoleip}}</li>
+            <li class="list-group-item">Management IP &nbsp;&nbsp;&nbsp;: &nbsp;{{reservedata[0].managementip}}</li>
+            <li class="list-group-item">Power Cycler IP&nbsp;&nbsp;&nbsp; &nbsp;: &nbsp;{{reservedata[0].powercycleip}}</li>
+            <li class="list-group-item">Power Cycler Port : &nbsp;{{reservedata[0].powercycleport}}</li>
+            <li class="list-group-item">Team Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: &nbsp;{{reservedata[0].teamname}}</li>
+            <li class="list-group-item">Project Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: &nbsp;{{reservedata[0].projectname}}</li>
+            <li class="list-group-item">Serial Number &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: &nbsp;{{reservedata[0].serialnumber}}</li>
+            <li class="list-group-item">Mac Address &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: &nbsp;{{reservedata[0].mac}}</li>
+            <li class="list-group-item">TG Information &nbsp;&nbsp;&nbsp;&nbsp;: &nbsp;{{reservedata[0].TG}}</li>
+
+
+    
+    
+    
+          </ul>
+        </div>
+        </div>
+        </div>
+        
+
+
+        <!-- <form > -->
+          
+          <!-- <div class="col-md-4 m-2">
+            <label class="m-2">End Time</label>
+              <input type="datetime-local" min={{startTime}} max={{endTime}} class="form-control endTime" placeholder="End Time" formControlName="endtime"/>
+          </div> -->
+
+
+
+
+
+
+
+
+          
+<!-- <label>
+  Date Time Range From:
+  <input [owlDateTimeTrigger]="dt12" [owlDateTime]="dt12"
+         [(ngModel)]="selectedMoments"
+         [selectMode]="'rangeFrom'">
+  <owl-date-time #dt12></owl-date-time>
+</label>
+
+<label>
+  Date Time Range To:
+  <input [owlDateTimeTrigger]="dt13" [owlDateTime]="dt13"
+         [(ngModel)]="selectedMoments"
+         [selectMode]="'rangeTo'">
+  <owl-date-time #dt13></owl-date-time>
+</label> -->
+          <!-- <div class=" m-2">
+              <span  *ngFor='let slot of timeInterval '>
+                <div class="btn-group" role="group" aria-label="Basic radio toggle button group" >
+              <button type="radio" class="btn-check" name="btnradio" id={{slot.id}} autocomplete="off" (click)="clickedTimeInterval(slot.id, slot.startTime , slot.endTime)">{{slot.startTime}} - {{slot.endTime}}</button>
+            </div>
+            
+            </span>
+            </div> -->
+           
+         
+            <!-- <button *ngIf="showDevice" class="btn btn-warning m-2" (click)="updateDevice(showDevice)">Reserve</button>
+
+          
+     
+      </form>
+      </div>
+      </div> 
+     
+       -->
+
+    
+
+
+
+       <div *ngIf="errMsg" class="alert alert-danger alert-warning alert-dismissible fade show" role="alert">
+        <strong>{{errMsg}}</strong>
+        <button type="button" class="btn-close " data-bs-dismiss="alert" aria-label="Close" (click)="clickClose()"></button>
+      </div>
+      <div class=" container mt-3 mb-3" style="font-size: 20px;" *ngIf="extended!=='Extended'"><b>For {{showCurrentTime}}</b></div>
+      <form [formGroup]="dateForm" *ngIf="extended==='Extended' && showSelectTime" class="container" >
+        <div class="col-md-4 m-2">
+          <label>Start Date : &nbsp; &nbsp; &nbsp; </label>
+            <input type="datetime-local" min={{startTime}} max={{endTime}} formControlName="startDate">
+        </div>
+        <div *ngIf="reservedata[0].status==='regular1'" class="col-md-4 m-2">
+          <label>End Date &nbsp;&nbsp;: &nbsp;&nbsp; &nbsp;</label>
+            <input type="datetime-local"  min={{startTime}} max={{regular1EndTime}} formControlName="endDate">
+        </div>
+        <div *ngIf="reservedata[0].status==='regular2'" class="col-md-4 m-2">
+          <label>End Date &nbsp;&nbsp;: &nbsp;&nbsp; &nbsp;</label>
+            <input type="datetime-local"  min={{startTime}} max={{regular2EndTime}} formControlName="endDate">
+        </div>
+        <div *ngIf="reservedata[0].status!=='regular2' && reservedata[0].status!=='regular1'"class="col-md-4 m-2">
+          <label>End Date &nbsp;&nbsp;: &nbsp;&nbsp; &nbsp;</label>
+            <input type="datetime-local"  min={{startTime}} max={{endTime}} formControlName="endDate">
+        </div>
+        
+
+        <button *ngIf='hideSelectTime' type="submit" class="btn btn-warning m-2"  (click)="clickedSelectTime()">Reserve</button>
+  
+   
+    </form>
+    <div class="m-3 container" *ngIf="!showSelectTime">Selected Date : {{dateForm.value.startDate}} To {{dateForm.value.endDate}} <span >         <button  type="button" class="btn btn-warning m-2" (click)="clickChangeButton()">Change Date Time</button></span> </div>
+    <!-- </div>
+     
+      <div class="btn-group container" role="group" aria-label="Basic example "  *ngIf="extended!=='Extended'">
+        <div   *ngFor='let slot of timeInterval' >
+          <button *ngIf="slot.topology_slot==='yes'" type="button" class="btn btn-outline-danger m-2" >{{slot.startTime}} - {{slot.endTime}} </button>
+          <button *ngIf="slot.topology_slot==='no'" type="button" class="btn btn-outline-success m-2" (click)="clickedTimeSlot( slot.id, slot.startTime, slot.endTime)">{{slot.startTime}} - {{slot.endTime}} </button>
+          <button *ngIf="slot.topology_slot==='invalid'" type="button" class="btn btn-outline-secondary m-2" >{{slot.startTime}} - {{slot.endTime}} </button>
+
+        </div>
+
+    
+      </div> -->
+      <div class="container">
+      <div class="btn-group" role="group" aria-label="Basic example" *ngIf="extended!=='Extended'">
+        <div   *ngFor='let slot of timeInterval ' >
+          <button *ngIf="slot.id<13 && slot.status==='invalid'" type="button" class="btn btn-outline-secondary m-2" >{{slot.startTime}} - {{slot.endTime}} </button>
+
+          <button *ngIf="slot.id<13 && slot.status==='yes'" type="button" class="btn btn-outline-danger m-2 button" >{{slot.startTime}} - {{slot.endTime}} </button>
+          <button *ngIf="slot.id<13 &&slot.status==='no'" type="button" class="btn btn-outline-success m-2" (click)="clickedTimeInterval(slot.id, slot.startTime , slot.endTime)">{{slot.startTime}} - {{slot.endTime}} </button>
+
+
+        </div>
+       
+      </div>
+      </div>
+      <div class="container">
+        <div class="btn-group" role="group" aria-label="Basic example" *ngIf="extended!=='Extended'">
+          <div   *ngFor='let slot of timeInterval ' >
+            <button *ngIf="slot.id>=13 && slot.status==='invalid'" type="button" class="btn btn-outline-secondary m-2" >{{slot.startTime}} - {{slot.endTime}} </button>
+  
+            <button *ngIf="slot.id>=13 && slot.status==='yes'" type="button" class="btn btn-outline-danger m-2 button" >{{slot.startTime}} - {{slot.endTime}} </button>
+            <button *ngIf="slot.id>=13 &&slot.status==='no'" type="button" class="btn btn-outline-success m-2" (click)="clickedTimeInterval(slot.id, slot.startTime , slot.endTime)">{{slot.startTime}} - {{slot.endTime}} </button>
+  
+  
+          </div>
+         
+        </div>
+        </div>
+      
+      <div class="container">
+      <button *ngIf="showDeviceInformat" class="btn btn-warning m-2" (click)="updateDevice(showDeviceInformat)">Reserve</button>
+</div>
+      <!-- <div class="btn-group" role="group" aria-label="Basic example "  *ngIf="showTime">
+        <div   *ngFor='let slot of timeInterval' >
+          <button *ngIf="slot.extended_slot==='yes'" type="button" class="btn btn-outline-danger m-2" >{{slot.startTime}} - {{slot.endTime}} </button>
+          <button *ngIf="slot.extended_slot==='no'" type="button" class="btn btn-outline-success m-2" (click)="clickedTimeSlot( slot.id, slot.startTime, slot.endTime)">{{slot.startTime}} - {{slot.endTime}} </button>
+          <button *ngIf="slot.extended_slot==='invalid'" type="button" class="btn btn-outline-secondary m-2" >{{slot.startTime}} - {{slot.endTime}} </button>
+
+        </div>
+
+       
+      </div> -->
+
+      <!-- <div *ngIf="timeSlotForTopology">
+       <button *ngIf="extended==='Extended'" class="btn btn-warning m-2" (click)="updateDeviceForExtended(timeSlotForTopology)">Reserve Topology</button> 
+
+      </div> -->
+
+<!--
+    <div class="container mt-5 mb-2" *ngIf="extended!=='Extended'" >
+        <h2 class="mb-5">Device Information</h2>
+        <h4 class="m-4"> For {{showCurrentTime}} </h4>
+        <table class="table table-bordered container m-4" >
+          <thead style="text-align:center;">
+            <tr>
+             
+              <th scope="col" >Start Time</th>
+              <th scope="col">End Time</th>
+              <th scope="col">User Name</th>
+         
+      
+      
+            </tr>
+          </thead>
+          <tbody *ngFor="let item of timeInterval"> 
+            <tr *ngIf="item.topology_slot==='yes'">
+              <td style="text-align: center;">{{item.startTime}}</td>
+              <td style="text-align: center;">{{item.endTime}}</td>
+              <td style="text-align: center;">{{item.user}}</td>
+            </tr>
+            
+           </tbody> 
+        </table>
+        
+      </div>
+    -->
+      <div class="container mt-5 mb-2" *ngIf="extended==='Extended'" > 
+        <h3 class=" container"><b>Device Information</b></h3>
+
+        <!-- <h2 class="mb-5">Device Information</h2> -->
+        <h4 class="m-4"> For Extended </h4>
+        <table class="table table-bordered container m-4" >
+          <thead style="text-align:center;">
+            <tr>
+             
+              <th scope="col" >Start Time</th>
+              <th scope="col">End Time</th>
+              <th scope="col">User Name</th>
+         
+      
+      
+            </tr>
+          </thead>
+          
+          <tbody *ngFor="let item of extendedTimeInterval"> 
+            <tr>
+              <td style="text-align: center;">Date:&nbsp;{{item.time.substring(0,10)}}<br>Time:&nbsp; {{item.time.substring(11,16)}}</td>
+              <td style="text-align: center;">Date:&nbsp;{{item.endtime.substring(0,10)}}<br>Time:&nbsp; {{item.endtime.substring(11,16)}}</td>
+              <td style="text-align: center;">{{item.name}}</td>
+            </tr>
+            </tbody>
+            </table>
+            </div>
+             
+
+             <div class="container mt-5 mb-5" *ngIf=" extended!=='Extended'">
+              <h3 class=" container"><b>Device Information</b></h3>
+
+              <h4 class="m-4"> For {{showCurrentTime}} </h4>
+              <table class="table table-bordered container" >
+                <thead style="text-align:center;">
+                  <tr>
+                   
+                    <th scope="col" >Start Time</th>
+                    <th scope="col">End Time</th>
+                    <th scope="col">User Name</th>
+               
+            
+            
+                  </tr>
+                </thead>
+                <tbody *ngFor="let item of timeInterval"> 
+                  <tr *ngIf="item.showHistory==='yes'">
+                    <td style="text-align: center;">{{item.startTime}}</td>
+                    <td style="text-align: center;">{{item.endTime}}</td>
+                    <td style="text-align: center;">{{item.user}}</td>
+                  </tr>
+                  
+                 </tbody> 
+              </table>
+              
+            </div>

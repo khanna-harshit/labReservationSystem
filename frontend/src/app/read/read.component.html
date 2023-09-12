@@ -1,0 +1,158 @@
+<div class="mt-5 " *ngIf="access==='user' || access==='admin'">
+
+    <h1  style="text-align: center;" class="mt-5 mb-5 bello" *ngIf="topologyname.length">YOUR TOPOLOGIES</h1>
+    <div class="card container mb-5" *ngFor="let topologies of topologyname">
+      <div class="card-body">
+  
+        <h2 class="card-title">{{topologies}}
+          <span *ngIf="!currentStatusArr.includes(UserData(topologies))" style="float:right;">
+            <button class=" btn btn-success m-2">Available</button>
+        </span>
+
+        <span *ngIf="currentStatusArr.includes(UserData(topologies))" style="float:right;">
+          <button class=" btn btn-danger m-2">Reserved</button>
+        </span>
+        <span  style="float:right;">
+          <button *ngIf="filter_used_for(topologies)!=='-1'" style="background-color: #164B60; text-transform: uppercase;" class=" btn btn-primary m-2">{{filter_used_for(topologies)}}</button>
+      </span>
+      </h2>
+        
+        <div > 
+          <!-- <div *ngIf="entry.topologyname===topologies"> -->
+
+        
+          
+        </div>
+        <div *ngIf="currentStatusArr.includes(UserData(topologies))"> 
+          <!-- <div *ngIf="entry.topologyname===topologies"> -->
+            <div *ngFor="let value of currentStatusTopology" class="m-4" >
+            <div class="card-text m-1" *ngIf="value.deviceid.toString()===UserData(topologies)"><b>User : &nbsp; &nbsp;</b>{{value.name}}
+
+            </div>
+            <div class="card-text m-1" *ngIf="value.deviceid.toString()===UserData(topologies)"><b>Reserve duration : &nbsp; &nbsp;</b><br>&nbsp;&nbsp;&nbsp;&nbsp;<b>From:</b> &nbsp;{{value.time.substring(0,10)}} <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{value.time.substring(11,16)}}<br><b>&nbsp;&nbsp;&nbsp;&nbsp;To:&nbsp;&nbsp;&nbsp;</b>{{value.endtime.substring(0,10)}}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{value.endtime.substring(11,16)}}
+
+            </div>
+          </div>
+          
+        
+          
+        </div>
+
+        <!-- <table class="table table-bordered container" >
+          <thead style="text-align:center;">
+            <tr>
+             
+              <th scope="col" >Rack</th>
+              <th scope="col">Unit</th>
+              <th scope="col">Device Name</th>
+              <th scope="col">Console IP</th>
+              <th scope="col">Management IP</th>
+             
+              <th scope="col">Project Name</th>
+  
+            </tr>
+          </thead>
+          <tbody *ngFor="let item of topologyInformation"> 
+            <tr *ngIf="item.topologyname===topologies">
+              <td  style="text-align:center;" >{{item.rack}}</td>
+              <td style="text-align:center;">{{item.unit}}</td>
+              <td style="text-align:center;">{{item.devicename}}</td>
+              <td style="text-align:center;">{{item.consoleip}} {{item.consoleport}}</td>
+  
+              
+              <td style="text-align:center;">{{item.managementip}}</td>
+           
+            
+              <td style="text-align:center;">{{item.projectname}}</td>
+  
+        
+            </tr>
+            
+           </tbody> 
+        </table> -->
+        <div>
+          <button  class="btn btn-warning m-2"[routerLink]="['/topologydetail',topologies]" >Details</button>
+          <button *ngIf="access==='admin'" class="btn btn-primary m-2" [routerLink]="['/modifytopology',topologies]">Modify</button>
+  
+          </div>
+       
+      
+      </div>
+    </div>
+</div>
+
+<h1 style="text-align: center;" class="mt-5 mb-5 bello"> ALL AVAILABLE DEVICES</h1>
+
+<div class=" container" *ngFor="let project of projects">
+<h3 class="m-4" *ngIf="project.teamname===teamname"><b>{{project.projectname}} Devices</b></h3>
+
+<!-- <table  class="table table-bordered ms-5 container">  -->
+<table *ngIf="project.teamname===teamname" class="table table-bordered container" >
+<thead style="text-align:center;">
+<tr>
+
+<th scope="col" >Rack</th>
+<th scope="col">Unit</th>
+<th scope="col">Device Name</th>
+<th scope="col">Console IP</th>
+
+<th scope="col">Management IP</th>
+
+<th scope="col">Project Name</th>
+<th scope="col" *ngIf="( access==='admin' || access==='user')" style="width:20%" >User</th>
+
+<th scope="col" *ngIf="( access==='admin' || access==='user')" style="width:30%">Reserve Duration</th>
+
+
+<th scope="col" *ngIf="( access==='admin' || access==='user')">Status</th>
+<th scope="col" *ngIf="( access==='admin' || access==='user')">Action</th>
+<!-- <th scope="col" *ngIf="( access==='admin' || access==='user')">Add To Topology</th> -->
+
+
+</tr>
+</thead>
+<tbody > 
+<tr *ngFor="let item of devices">
+<td *ngIf="!devicesInTopology.includes(item.id) && item.projectname===project.projectname" style="text-align:center;">{{item.rack}}</td>
+<td  *ngIf="!devicesInTopology.includes(item.id) && item.projectname===project.projectname" style="text-align:center;">{{item.unit}}</td>
+<td  *ngIf="!devicesInTopology.includes(item.id) && item.projectname===project.projectname" style="text-align:center;">{{item.devicename}}</td>
+<td  *ngIf="!devicesInTopology.includes(item.id) && item.projectname===project.projectname" style="text-align:center;">{{item.consoleip}} {{item.consoleport}}</td>
+<td  *ngIf="!devicesInTopology.includes(item.id) && item.projectname===project.projectname"  style="text-align:center;">{{item.managementip}}</td>
+
+<td  *ngIf="!devicesInTopology.includes(item.id) && item.projectname===project.projectname" style="text-align:center;">{{item.projectname}}</td>
+
+<td  *ngIf="currentStatusArr.includes(item.id.toString()) && !devicesInTopology.includes(item.id) && item.projectname===project.projectname && ( access==='admin' || access==='user')" > <div *ngFor="let value of currentStatus" ><div *ngIf="value.deviceid===item.id.toString()" style="text-align:center;">{{value.name}}</div></div></td>
+
+<td  *ngIf="currentStatusArr.includes(item.id.toString()) && !devicesInTopology.includes(item.id) && item.projectname===project.projectname && ( access==='admin' || access==='user')" > <div *ngFor="let value of currentStatus" ><div *ngIf="value.deviceid===item.id.toString()" style="text-align:center;"><b>From:</b> &nbsp;{{value.time.substring(0,10)}} <br> {{value.time.substring(11,16)}}<br><b>To:&nbsp;&nbsp;&nbsp;</b>{{value.endtime.substring(0,10)}}<br>{{value.endtime.substring(11,16)}}</div></div></td>
+<td  *ngIf="!currentStatusArr.includes(item.id.toString()) && !devicesInTopology.includes(item.id) && item.projectname===project.projectname && ( access==='admin' || access==='user')" style="text-align:center;">--</td>
+
+<td  *ngIf="!currentStatusArr.includes(item.id.toString()) && !devicesInTopology.includes(item.id) && item.projectname===project.projectname && ( access==='admin' || access==='user')" style="text-align:center;">--</td>
+
+<td *ngIf="currentStatusArr.includes(item.id.toString()) && !devicesInTopology.includes(item.id) && ( access==='admin' || access==='user') && item.projectname===project.projectname"><button class=" btn btn-danger" >Reserved</button></td>
+<td *ngIf="!currentStatusArr.includes(item.id.toString()) && !devicesInTopology.includes(item.id) && ( access==='admin' || access==='user') && item.projectname===project.projectname"><button class=" btn btn-success">Available</button></td>
+
+
+
+
+
+<td *ngIf=" ( access==='admin' || access==='user') && !devicesInTopology.includes(item.id) && item.projectname===project.projectname"><button class=" btn btn-warning" [routerLink]="['/devicedetail',item.id,getProject(project.projectname)]">More</button></td>
+<!-- <td *ngIf="item.status==='Reserved'  && ( access==='admin' || access==='user')"><button class="btn btn-success" (click)="clickedreserved(item.id)">{{item.status}}</button></td> -->
+<!-- <td *ngIf="( access==='admin' || access==='user') && !devicesInTopology.includes(item.id)"><button class="btn btn-success" (click)="addToCart(item.id)">Add to topology</button></td> -->
+
+
+
+
+
+<!-- <td><button class="btn btn-danger" (click)="deleteId(item.id)">Delete</button></td>
+<td><a [routerLink]="['/create', item.id]" class="btn btn-primary" >Update</a></td> -->
+
+
+</tr>
+
+</tbody> 
+</table>
+</div> 
+
+
+
+

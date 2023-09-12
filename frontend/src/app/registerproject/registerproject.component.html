@@ -1,0 +1,37 @@
+<h1 style="text-align: center;" class="mt-5 mb-5">Register Project</h1>
+<div class="container">
+<div *ngIf="errMsg" class="alert alert-danger alert-warning alert-dismissible fade show" role="alert">
+   <strong>{{errMsg}}</strong>
+   <button type="button" class="btn-close " data-bs-dismiss="alert" aria-label="Close" (click)="clickClose()"></button>
+ </div>
+ <div *ngIf="successMsg" class="alert alert-success alert-dismissible fade show" role="alert">
+   <strong>{{successMsg}}</strong>
+   <button type="button" class="btn-close " data-bs-dismiss="alert" aria-label="Close" (click)="clickClose()"></button>
+ </div>
+     </div>
+<form [formGroup]="projectDetailsForm" class="container" >
+   <div class="col-md-4 m-3">
+       <input type="text" class="form-control" placeholder="Enter Project Name" formControlName="projectname">
+   </div>
+   <div class="col-md-4 m-3">
+       <input type="text" class="form-control" placeholder="Enter Team Name" formControlName="teamname">
+   </div>
+ 
+   <div class="col-md-4 m-3">
+
+       <label for="team">Reservation Type</label>
+       <select id="team" formControlName="type">
+         <option value="Extended">Extended</option>
+         <option value="Regular">Regular</option>
+         
+       </select>
+     </div>
+    
+
+   <div class="col-md-4 m-3">
+   <button type="submit" class="btn btn-primary m-2" (click)="projectSubmit()">Register project</button>
+</div>
+
+</form>
+
+

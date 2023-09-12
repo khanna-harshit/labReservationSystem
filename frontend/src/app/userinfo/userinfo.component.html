@@ -1,0 +1,166 @@
+
+<div class="mt-5">
+  <div class=" container mt-5">
+<h1  style="text-align: center;" class=" bello">Current Devices</h1>
+        
+
+<div class="mt-5" >
+  <div  style="margin-top: 50px; ">
+      <table class="table table-bordered " >
+  <thead>
+    <tr>
+     
+      
+      <th scope="col">Device Name/Topology Name</th>
+      <th scope="col">Start Time</th>
+      <th scope="col">End Time</th>
+
+      <th scope="col">Team Name</th>
+      <!-- <th scope="col">Project Name</th> -->
+      <th scope="col">Action</th>
+      
+    </tr>
+  </thead>
+  <tbody *ngFor="let item of current"> 
+    <tr>
+  
+      
+      <td><a [routerLink]="['/devicedetail',getDeviceId(item.devicename),getProjectType(item.devicename)]" style="text-decoration: none; color: black; cursor: pointer;"><b>{{item.devicename}}</b></a></td>
+      <td>Date:&nbsp;{{item.time.substring(0,10)}}<br>Time:&nbsp; {{item.time.substring(11,16)}}</td>
+      <td>Date:&nbsp;{{item.endtime.substring(0,10)}}<br>Time:&nbsp; {{item.endtime.substring(11,16)}}</td>
+      <td>{{item.team}}</td>
+     <!-- <td>{{item.projectname}}</td> -->
+     <td ><button class="btn btn-warning" (click)="clickedUnreserveFromCurrentDevice(item.id)">Unreserve</button></td>
+
+      
+    </tr>
+    
+   </tbody> 
+   <tbody *ngFor="let item of currentDevice"> 
+    <tr>
+  
+      <td><a [routerLink]="['/topologydetail',item.topologyname]" style="text-decoration: none; color: black; cursor: pointer;"><b>{{item.topologyname}}</b></a></td>
+
+      <!-- <td>{{item.topologyname}}</td> -->
+      <td>Date:&nbsp;{{item.time.substring(0,10)}}<br>Time:&nbsp; {{item.time.substring(11,16)}}</td>
+      <td>Date:&nbsp;{{item.endtime.substring(0,10)}}<br>Time:&nbsp; {{item.endtime.substring(11,16)}}</td>
+      <td>{{item.team}}</td>
+     <!-- <td>{{item.projectname}}</td> -->
+     <td ><button class="btn btn-warning" (click)="clickedUnreserveFromCurrentTopology(item.id, 'topology', item.topologyname, item.time)">Unreserve</button></td>
+
+      
+    </tr>
+    
+   </tbody> 
+</table>
+    </div>
+    </div></div>
+  
+</div>
+<div class="container mt-5">
+
+  <h1  style="text-align: center; " class="container mt-5">Scheduled</h1>
+
+
+  <div class="mt-5" >
+    <div  style="margin-top: 50px; ">
+      <table class="table table-bordered ">
+        <thead>
+          <tr>
+          
+            <th scope="col">Device Name/Topology Name</th>
+            <th scope="col">Start Time</th>
+            <th scope="col">End Time</th>
+            <th scope="col">Team Name</th>
+            <!-- <th scope="col">Project Name</th> -->
+            <th scope="col">Action</th>
+
+            
+          </tr>
+        </thead>
+        <tbody *ngFor="let item of schedule"> 
+          <tr >
+          
+            <!-- <td>{{item.topologyname}}</td> -->
+            <td><a [routerLink]="['/topologydetail',item.topologyname]" style="text-decoration: none; color: black; cursor: pointer;"><b>{{item.topologyname}}</b></a></td>
+
+            <td>Date:&nbsp;{{item.time.substring(0,10)}}<br>Time:&nbsp; {{item.time.substring(11,16)}}</td>
+            <td>Date:&nbsp;{{item.endtime.substring(0,10)}}<br>Time:&nbsp; {{item.endtime.substring(11,16)}}</td>
+            <td>{{item.team}}</td>
+           <!-- <td>{{item.projectname}}</td> -->
+           <td ><button class="btn btn-warning" (click)="clickedUnreserveFromScheduleTopology(item.id, 'topology', item.topologyname, item.time)">Unreserve</button></td>
+          </tr>
+          
+         </tbody> 
+         <tbody *ngFor="let item of scheduleDevice"> 
+          <tr >
+            <td><a [routerLink]="['/devicedetail',getDeviceId(item.devicename),getProjectType(item.devicename)]" style="text-decoration: none; color: black; cursor: pointer;"><b>{{item.devicename}}</b></a></td>
+
+            <!-- <td>{{item.devicename}}</td> -->
+            <td>Date:&nbsp;{{item.time.substring(0,10)}}<br>Time:&nbsp; {{item.time.substring(11,16)}}</td>
+            <td>Date:&nbsp;{{item.endtime.substring(0,10)}}<br>Time:&nbsp; {{item.endtime.substring(11,16)}}</td>
+            <td>{{item.team}}</td>
+           <!-- <td>{{item.projectname}}</td> -->
+           <td ><button class="btn btn-warning" (click)="clickedUnreserveFromSchedule(item.id)">Unreserve</button></td>
+          </tr>
+          
+         </tbody> 
+      </table>
+      </div>
+      </div>
+
+</div>
+<div class="container mt-5">
+
+  <h1  style="text-align: center; " class="container mt-5"> History</h1>
+
+
+  <div class="mt-5" >
+    <div  style="margin-top: 50px; ">
+      <table class="table table-bordered ">
+        <thead>
+          <tr>
+           
+            <th scope="col">Device Name/Topology Name</th>
+            <th scope="col">Start Time</th>
+            <th scope="col">End Time</th>
+            <th scope="col">Team Name</th>
+            <!-- <th scope="col">Project Name</th> -->
+            
+          </tr>
+        </thead>
+        <tbody *ngFor="let item of history"> 
+          <tr >
+            
+            <!-- <td>{{item.devicename}}</td> -->
+            <td><a [routerLink]="['/devicedetail',getDeviceId(item.devicename),getProjectType(item.devicename)]" style="text-decoration: none; color: black; cursor: pointer;"><b>{{item.devicename}}</b></a></td>
+
+            <td>Date:&nbsp;{{item.time.substring(0,10)}}<br>Time:&nbsp; {{item.time.substring(11,16)}}</td>
+            <td>Date:&nbsp;{{item.endtime.substring(0,10)}}<br>Time:&nbsp; {{item.endtime.substring(11,16)}}</td>
+            <td>{{item.teamname}}</td>
+           <!-- <td>{{item.projectname}}</td> -->
+          
+            
+          </tr>
+          
+         </tbody> 
+         <tbody *ngFor="let item of historyDevice"> 
+          <tr >
+            
+            <!-- <td>{{item.topologyname}}</td> -->
+            <td><a [routerLink]="['/topologydetail',item.topologyname]" style="text-decoration: none; color: black; cursor: pointer;"><b>{{item.topologyname}}</b></a></td>
+
+            <td>Date:&nbsp;{{item.time.substring(0,10)}}<br>Time:&nbsp; {{item.time.substring(11,16)}}</td>
+            <td>Date:&nbsp;{{item.endtime.substring(0,10)}}<br>Time:&nbsp; {{item.endtime.substring(11,16)}}</td>
+            <td>{{item.team}}</td>
+           <!-- <td>{{item.projectname}}</td> -->
+          
+            
+          </tr>
+          
+         </tbody> 
+      </table>
+      </div>
+      </div>
+
+</div>
